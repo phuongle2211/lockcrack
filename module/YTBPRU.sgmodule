@@ -1,0 +1,20 @@
+#!name=YouTube Premium Unlock (Educational)
+#!desc=Fake Premium via MITM – For academic purposes only
+
+[Script]
+# Script giả lập phản hồi tài khoản Premium
+ytpremium = type=http-response, 
+pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/account\/get_setting, 
+script-path=https://example.com/mock/youtube_premium.js, 
+requires-body=true, 
+max-size=0, 
+timeout=60
+
+# Script xoá các header xác thực (mô phỏng)
+ytremove = type=http-request, 
+pattern=^https:\/\/youtubei\.googleapis\.com\/.*, 
+script-path=https://example.com/mock/remove_auth_header.js, 
+timeout=60
+
+[MITM]
+hostname = %APPEND% youtubei.googleapis.com
